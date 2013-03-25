@@ -39,7 +39,9 @@ class SpecializationManager(Manager):
         :rtype: :class:`djeneralize.query.SpecializedQuerySet`
         
         """
-
+        if hasattr(self.model.objects, 'filter_args'):
+            return SpecializedQuerySet(self.model).filter(**self.model.objects.filter_args)
+            
         return SpecializedQuerySet(self.model)
     
     def direct(self):
